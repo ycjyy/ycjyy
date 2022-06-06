@@ -1,0 +1,165 @@
+"默认{{{
+"set nocompatible
+"source $VIMRUNTIME/vimrc_example.vim
+"source $VIMRUNTIME/mswin.vim
+behave mswin
+
+"set diffexpr=MyDiff()
+"function MyDiff()
+  "let opt = '-a --binary '
+  "if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  "if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  "let arg1 = v:fname_in
+  "if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  "let arg2 = v:fname_new
+  "if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  "let arg3 = v:fname_out
+  "if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  "let eq = ''
+  "if $VIMRUNTIME =~ ' '
+    "if &sh =~ '\<cmd'
+      "let cmd = '""' . $VIMRUNTIME . '\diff"'
+      "let eq = '"'
+    "else
+      "let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    "endif
+  "else
+    "let cmd = $VIMRUNTIME . '\diff'
+  "endif
+  "silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+"endfunction
+"}}}
+
+
+"快捷键{{{
+
+"{{{
+nn <f2> :w<cr>
+nn <f1> :w<cr>
+nn <f8> :so %<cr>
+nn <f7> :e $MYVIMRC<cr>
+nn <f10> :tabnew<cr>
+nn <f11> :tabn<cr>
+nn <f12> :bd<cr>
+nn <f9> :bn<cr>
+imap <f2> <esc>:w<cr>
+imap <f1> <esc>:w<cr>
+"nn <space> <pagedown>
+nn <a-n> <pagedown>
+nn <a-p> <pageup>
+nn <cr> o<esc>
+nn K <esc>
+nn J <esc>
+
+
+"}}}
+
+"let mapleader=","
+nn <leader>[[ i"{{{<esc>
+nn <leader>]] i"}}}<esc>
+nn <leader>hh ^
+nn <leader>ll $
+nn <leader>gg G
+nn <leader>tr :NERDTree
+nn <f3> :FZFMru<cr>
+nn <f2> :NERDTreeToggle<cr>
+map <f6> <leader>ci
+set winaltkeys=no
+set nu
+
+set go=
+"{{{
+nn <a-h> <c-w>h 
+nn <a-l> <c-w>l 
+nn <a-j> <c-w>j 
+nn <a-h> <c-w>h 
+
+nn <a-s-j> :resize +5<cr>
+nn <a-s-k> :resize -5<cr>
+nn <a-s-h> :vertical resize+5<cr>
+nn <a-s-l> :vertical resize-5<cr>
+"}}}
+nn <leader>mr :Mru<cr>
+"{{{
+ino <a-j> <down>
+ino <a-k> <up>
+ino <a-h> <left>
+ino <a-l> <right>
+
+ino <a-;> <bs>
+ino <a-,> <del>
+ino <a-/> <cr>
+ino <a-.> <tab>
+"}}}
+"重定向{{{
+nn <leader>re :redi>>%<cr>
+nn <leader>ei :edit<cr>
+nn <leader>en :redi end<cr>
+
+nn <leader>rm :setlocal nomore<cr>:redi>>%<cr>:messages<cr>:redi end<cr>:edit<cr>:w<cr>
+"nn <F5> :setlocal nomore<cr>:redi>>%<cr>:messages<cr>:redi end<cr>:edit<cr>:w<cr>
+"}}}
+nn <leader>qx ggVG_
+
+nn <c-v> "+p
+nn <c-c> "+y
+
+nn <leader>nu :setlocal nu!<cr>
+nn <leader>wr :setlocal wrap!<cr>
+"科科{{{
+" Use <Tab> and <S-Tab> to navigate the completion list
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+nn <leader>lm :CocList marketplace
+nn <leader>le :CocList extensions
+nn <leader>li :CocList
+
+set autochdir
+
+"” 绑定 ctrl-space 触发补全
+inoremap <silent><expr> <c-space> coc#refresh()
+"}}}
+nn <leader>me :messages<cr>
+"}}}
+"界面{{{
+"set guifont=Menlo:h22
+"colorscheme zellner
+"set background=dark
+"set background=light
+"colorscheme evening
+"colorscheme solarized8
+ "colorscheme solarized8_flat
+ "colorscheme cake16
+" colorscheme stellarized
+"set guifontwide=楷体:h22
+set foldmethod=marker
+"}}}
+" 语言{{{
+set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
+set encoding=utf-8
+set langmenu=zh_CN
+let $LANG = 'en_US.UTF-8'
+language messages zh_CN.UTF-8
+" }}}
+
+
+"标记{{{
+""""""""""""""""""""""""""""""
+" Tag list (ctags)
+""""""""""""""""""""""""""""""
+if has("win32")                "设定windows系统中ctags程序的位置
+let Tlist_Ctags_Cmd = 'ctags'
+elseif has("linux")              "设定linux系统中ctags程序的位置
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+endif
+let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
+ 
+let Tlist_Compact_Format = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+"let Tlist_Close_On_Select = 1
+nnoremap <leader>tl :TlistToggle<CR>
+"}}}
+
+lua require ('init')
